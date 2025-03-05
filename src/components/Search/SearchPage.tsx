@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
 import DogCard from '@/components/Dogs/DogCard';
+import Pagination from '../Common/Pagination/Pagination';
 import { useFavorites } from '@/context/FavoritesContext';
 import styles from './SearchPage.module.css';
 import { Dog, SearchParams } from '@/types/api';
@@ -20,6 +21,17 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const { toggleFavorite, favorites } = useFavorites();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 25;
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    setSearchParams(prev => ({
+      ...prev,
+      from: (page - 1) * itemsPerPage
+    }));
+  };
+
   useEffect(() => {
     const fetchBreeds = async () => {
       try {
@@ -33,6 +45,10 @@ export default function SearchPage() {
     fetchBreeds();
   }, [navigate]);
 
+  useEffect(() => {
+    handleSearch();
+  }, [searchParams]);
+  
   const handleSearch = async () => {
     setLoading(true);
     try {
@@ -110,6 +126,16 @@ export default function SearchPage() {
             onToggleFavorite={() => toggleFavorite(dog)}
           />
         ))}
+        </div>
+        <div>
+        {results.total > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={results.total}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );
