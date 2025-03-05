@@ -12,7 +12,7 @@ export default defineConfig({
     port: 3000,
     open: true
   },
-  base: 'https://github.com/will-of-mike/fetch-dog-adoption',
+  base: '/fetch-dog-adoption',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
