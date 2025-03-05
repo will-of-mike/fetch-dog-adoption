@@ -15,6 +15,7 @@ export default function LoginForm() {
     e.preventDefault();
     try {
       await login({ name, email });
+      localStorage.setItem('isLoggedIn', 'true');
       navigate(`${baseUrl}/search`);
     } catch (error) {
       setError('Login failed. Please check your credentials.');
