@@ -15,6 +15,10 @@ export interface Location {
     state: string
     county: string
 }
+
+interface Match {
+    match: string
+}
   
 export interface SearchParams {
     breeds?: string[]

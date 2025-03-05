@@ -47,11 +47,21 @@ export const api = {
     return response.json()
   },
 
-  async getBreeds(): Promise<any> {
+  async getBreeds(): Promise<Dog[]> {
     const response = await fetch(`${API_BASE}/dogs/breeds`, {
       credentials: 'include'
     });
 
+    return await response.json();
+  },
+
+  getMatch: async (dogIds: string[]) => {
+    const response = await fetch(`${API_BASE}/dogs/match`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dogIds),
+      credentials: 'include'
+    });
     return await response.json();
   }
 }
