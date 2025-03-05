@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import styles from './LoginForm.module.css';
+import { baseUrl } from '@/constants/constants';
 
 export default function LoginForm() {
   const [name, setName] = useState('');
@@ -14,7 +15,7 @@ export default function LoginForm() {
     e.preventDefault();
     try {
       await login({ name, email });
-      navigate('/search');
+      navigate(`${baseUrl}/search`);
     } catch (error) {
       setError('Login failed. Please check your credentials.');
     }

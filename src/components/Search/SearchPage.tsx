@@ -6,6 +6,7 @@ import Pagination from '../Common/Pagination/Pagination';
 import { useFavorites } from '@/context/FavoritesContext';
 import styles from './SearchPage.module.css';
 import { Dog, SearchParams } from '@/types/api';
+import { baseUrl } from '@/constants/constants';
 
 export default function SearchPage() {
   const navigate = useNavigate();
@@ -31,8 +32,6 @@ export default function SearchPage() {
       from: (page - 1) * itemsPerPage
     }));
   };
-
-  const baseUrl = '/fetch-dog-adoption'
 
   useEffect(() => {
     const fetchBreeds = async () => {

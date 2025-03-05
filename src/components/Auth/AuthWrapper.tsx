@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
 import LoadingSpinner from '@/components/Common/LoadingSpinner/LoadingSpinner';
+import { baseUrl } from '@/constants/constants';
 
 export default function AuthWrapper() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const baseUrl = '/fetch-dog-adoption'
 
   useEffect(() => {
     const validateSession = async () => {

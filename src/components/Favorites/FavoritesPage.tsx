@@ -5,6 +5,7 @@ import { Dog } from '@/types/api';
 import DogCard from '@/components/Dogs/DogCard';
 import { useFavorites } from '@/context/FavoritesContext';
 import styles from './FavoritesPage.module.css';
+import { baseUrl } from '@/constants/constants';
 
 export default function FavoritesPage() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function FavoritesPage() {
     } catch (error) {
       console.error('Match generation failed:', error);
       setError('Failed to generate match. Please try again.');
-      navigate('/favorites'); // Ensure we stay on the page
+      navigate(`${baseUrl}/favorites`);
     } finally {
       setLoading(false);
     }

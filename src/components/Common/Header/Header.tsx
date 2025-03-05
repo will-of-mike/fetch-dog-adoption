@@ -1,14 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { api } from '@/services/api';
+import { baseUrl } from '@/constants/constants';
 import { useAuth } from '@/context/AuthContext';
 import styles from './Header.module.css';
 
 export default function Header() {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
-
-  const baseUrl = '/fetch-dog-adoption'
 
   const handleLogout = async () => {
     await logout();

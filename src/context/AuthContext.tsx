@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { api } from '@/services/api';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '@/constants/constants';
 
 type AuthContextType = {
   isLoggedIn: boolean;
@@ -16,8 +17,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  const baseUrl = '/fetch-dog-adoption';
 
   useEffect(() => {
     const checkAuth = async () => {
