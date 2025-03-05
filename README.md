@@ -2,6 +2,8 @@
 
 A React-based dog adoption platform built with TypeScript and Vite.
 
+[The Challenge](https://frontend-take-home.fetch.com/)
+
 ## Features
 
 - Type-safe React components
@@ -12,17 +14,23 @@ A React-based dog adoption platform built with TypeScript and Vite.
 
 ## Development Setup
 
-1. Install dependencies:
+1. Clone this repo
+```node
+git clone https://github.com/will-of-mike/fetch-dog-adoption.git
+cd fetch-dog-adoption/
+```
+
+2. Install dependencies:
 ```node
 npm install
 ```
 
-2. Run Dev server
+3. Run Dev server
 ```node
 npm run dev
 ```
 
-3. Run Type Checking
+#### Run Type Checking
 ```node
 npm run type-check
 ```
