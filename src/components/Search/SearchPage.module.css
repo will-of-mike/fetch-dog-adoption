@@ -48,11 +48,13 @@ input[type="number"] {
     border-radius: 4px;
 }
   
-.searchButton {
+.loadingSearch {
     background: #27ae60;
-    color: white;
+    border-color: #1a1a1a;
+    color: #fff;
     padding: 1rem;
     border: none;
+    text-align: center;
     border-radius: 4px;
     width: 100%;
     cursor: pointer;

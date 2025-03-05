@@ -64,6 +64,7 @@ export default function SearchPage() {
 
   return (
     <div className={styles.container}>
+      <h3>Adjust fields for immediate results!</h3>
       <div className={styles.filters}>
         <div className={styles.filterGroup}>
           <label>Breeds:</label>
@@ -112,9 +113,9 @@ export default function SearchPage() {
           </select>
         </div>
 
-        <button className={styles.searchButton} onClick={handleSearch}>
-          {loading ? 'Searching...' : 'Search Dogs'}
-        </button>
+        {loading && (
+          <p className={styles.loadingSearch}>Herding puppies...</p>
+        )}
       </div>
 
       <div className={styles.results}>
