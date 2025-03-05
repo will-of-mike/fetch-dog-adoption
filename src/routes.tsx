@@ -6,15 +6,16 @@ import Spinner from '@/components/Common/LoadingSpinner/LoadingSpinner';
 const LoginForm = lazy(() => import('@components/Login/LoginForm'));
 const SearchPage = lazy(() => import('@components/Search/SearchPage'));
 const FavoritesPage = lazy(() => import('@components/Favorites/FavoritesPage'));
+const baseUrl = '/fetch-dog-adoption'
 
 export default function AppRoutes(): JSX.Element {
     return (
         <Suspense fallback={<Spinner />}>
             <Routes>
-                <Route path="/login" element={<LoginForm />} />
+                <Route path={`${baseUrl}/login`} element={<LoginForm />} />
                 <Route element={<AuthWrapper />}>
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/favorites" element={<FavoritesPage />} />
+                    <Route path={`${baseUrl}/search`} element={<SearchPage />} />
+                    <Route path={`${baseUrl}/favorites`} element={<FavoritesPage />} />
                 </Route>
                 <Route path="*" element={<LoginForm />} />
             </Routes>

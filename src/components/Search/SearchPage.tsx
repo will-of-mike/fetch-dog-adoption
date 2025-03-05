@@ -32,6 +32,8 @@ export default function SearchPage() {
     }));
   };
 
+  const baseUrl = '/fetch-dog-adoption'
+
   useEffect(() => {
     const fetchBreeds = async () => {
       try {
@@ -39,7 +41,7 @@ export default function SearchPage() {
         setBreeds(breeds);
       } catch (error) {
         throw new Error('Failed to fetch breeds')
-        navigate('/login');
+        navigate(`${baseUrl}/login`);
       }
     };
     fetchBreeds();

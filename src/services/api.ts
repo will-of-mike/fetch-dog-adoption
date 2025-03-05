@@ -2,14 +2,6 @@ import { Dog, SearchParams, SearchResponse } from '@/types/api'
 
 const API_BASE = 'https://frontend-take-home-service.fetch.com'
 
-async function authInterceptor(response: Response): Promise<Response> {
-  if (response.status === 401) {
-    localStorage.removeItem('isLoggedIn');
-    window.location.href = '/login';
-  }
-  return response;
-}
-
 export const api = {
   async login(credentials: { name: string; email: string }): Promise<boolean> {
     const response = await fetch(`${API_BASE}/auth/login`, {

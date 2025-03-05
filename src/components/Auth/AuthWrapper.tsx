@@ -7,6 +7,7 @@ import LoadingSpinner from '@/components/Common/LoadingSpinner/LoadingSpinner';
 export default function AuthWrapper() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const baseUrl = '/fetch-dog-adoption'
 
   useEffect(() => {
     const validateSession = async () => {
@@ -16,14 +17,14 @@ export default function AuthWrapper() {
         setIsLoading(false);
       } catch (error) {
         localStorage.removeItem('isLoggedIn');
-        navigate('/login', { replace: true });
+        navigate(`${baseUrl}/login`, { replace: true });
       }
     };
 
     if (localStorage.getItem('isLoggedIn')) {
       validateSession();
     } else {
-      navigate('/login', { replace: true });
+      navigate(`${baseUrl}/login`, { replace: true });
     }
   }, [navigate]);
 

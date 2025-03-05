@@ -17,6 +17,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const baseUrl = '/fetch-dog-adoption';
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -38,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const success = await api.login(credentials);
       if (!success) throw new Error('Login failed');
       setIsLoggedIn(true);
-      navigate('/search');
+      navigate(`${baseUrl}/search`);
     } catch (error) {
       throw new Error('Login failed. Please check your credentials.');
     }
@@ -48,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await api.logout();
       setIsLoggedIn(false);
-      navigate('/login');
+      navigate(`${baseUrl}/login`);
     } catch (error) {
       console.error('Logout failed:', error);
     }

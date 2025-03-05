@@ -8,15 +8,17 @@ export default function Header() {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
 
+  const baseUrl = '/fetch-dog-adoption'
+
   const handleLogout = async () => {
     await logout();
-    navigate('/login');
+    navigate(`${baseUrl}/login`);
   };
 
   return (
     <header className={styles.header}>
       <nav className={styles.navContainer}>
-        <Link to="/" className={styles.logo}>
+        <Link to={`${baseUrl}/`} className={styles.logo}>
           <span className={styles.logoIcon}>🐾</span>
           Fetch Adoption
         </Link>
@@ -24,8 +26,8 @@ export default function Header() {
         {isLoggedIn && (
           <div className={styles.navRight}>
             <div className={styles.navLinks}>
-              <Link to="/search" className={styles.link}>Search</Link>
-              <Link to="/favorites" className={styles.link}>Favorites</Link>
+              <Link to={`${baseUrl}/search`} className={styles.link}>Search</Link>
+              <Link to={`${baseUrl}/favorites`} className={styles.link}>Favorites</Link>
             </div>
             <button 
               onClick={handleLogout}
