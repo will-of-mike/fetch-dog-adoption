@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { api } from '@/services/api';
 import styles from './LoginForm.module.css';
 
 export default function LoginForm() {
@@ -9,15 +10,29 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  
+  try {
+    const success = await api.login({ name, email });
+    
+    if (success) {
+      localStorage.setItem('isLoggedIn', 'true');
+      navigate('/search');
+    } else {
+      setError('Invalid credentials');
+    }
+  } catch (error) {
+    setError('Login failed. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className={styles.loginContainer}>
-      <h1 className={styles.title}>Fetch Dog Adoption</h1>
+      <h1 className={styles.title}>Fetch Doggie Door</h1>
       <form onSubmit={handleSubmit} className={styles.loginForm}>
         <div className={styles.formGroup}>
           <label htmlFor="name">Name</label>
