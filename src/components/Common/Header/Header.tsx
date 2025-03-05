@@ -1,23 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { api } from '@/services/api';
+import { useAuth } from '@/context/AuthContext';
 import styles from './Header.module.css';
 
 export default function Header() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-  }, []);
+  const { isLoggedIn, logout } = useAuth();
 
   const handleLogout = async () => {
-    const success = await api.logout();
-    if (success) {
-      localStorage.removeItem('isLoggedIn');
-      setIsLoggedIn(false);
-      navigate('/login');
-    }
+    await logout();
+    navigate('/login');
   };
 
   return (
