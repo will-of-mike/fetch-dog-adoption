@@ -1,34 +1,24 @@
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '@/services/api';
+import { useAuth } from '@/context/AuthContext';
 import styles from './LoginForm.module.css';
 
 export default function LoginForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { login, loading } = useAuth();
   const navigate = useNavigate();
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
-  
-  try {
-    const success = await api.login({ name, email });
-    
-    if (success) {
-      localStorage.setItem('isLoggedIn', 'true');
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await login({ name, email });
       navigate('/search');
-    } else {
-      setError('Invalid credentials');
+    } catch (error) {
+      setError('Login failed. Please check your credentials.');
     }
-  } catch (error) {
-    setError('Login failed. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className={styles.loginContainer}>
