@@ -1,26 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
+import { Dog } from '@/types/api';
 import DogCard from '@/components/Dogs/DogCard';
 import { useFavorites } from '@/context/FavoritesContext';
 import styles from './FavoritesPage.module.css';
-import type { Dog, Match } from '@/types/api';
 
 export default function FavoritesPage() {
   const navigate = useNavigate();
-  const { favorites, toggleFavorite } = useFavorites();
+  const { favorites, toggleFavorite, resetFavorites } = useFavorites();
   const [match, setMatch] = useState<Dog | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleMatch = async () => {
-    if (favorites.length === 0) return;
+    if (favorites.length === 0) {
+      setError('Please select at least one favorite dog');
+      return;
+    }
+    
     setLoading(true);
+    setError('');
+    
     try {
-      const matchResponse: Match = await api.getMatch(favorites.map(d => d.id));
-      const [matchedDog] = await api.getDogs([matchResponse.match]);
-      setMatch(matchedDog);
+      const matchResponse = await api.getMatch(favorites.map(d => d.id));
+      
+      if (!matchResponse?.match) {
+        throw new Error('No match found');
+      }
+      
+      const matchedDogs = await api.getDogs([matchResponse.match]);
+      
+      if (!matchedDogs.length) {
+        throw new Error('Matched dog not found');
+      }
+      
+      setMatch(matchedDogs[0]);
+      resetFavorites();
     } catch (error) {
       console.error('Match generation failed:', error);
+      setError('Failed to generate match. Please try again.');
+      navigate('/favorites'); // Ensure we stay on the page
     } finally {
       setLoading(false);
     }
@@ -37,15 +57,16 @@ export default function FavoritesPage() {
         >
           {loading ? 'Finding Match...' : 'Generate Match'}
         </button>
+        {error && <div className={styles.error}>{error}</div>}
       </div>
 
       {match && (
         <div className={styles.matchSection}>
           <h3>Your Perfect Match!</h3>
           <DogCard
-            dog={match.dog}
-            isFavorited={favorites.some(f => f.id === match.dog.id)}
-            onToggleFavorite={() => toggleFavorite(match.dog)}
+            dog={match}
+            isFavorited={favorites.some(f => f.id === match.id)}
+            onToggleFavorite={() => toggleFavorite(match)}
           />
         </div>
       )}

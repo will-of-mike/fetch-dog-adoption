@@ -4,11 +4,13 @@ import { Dog } from '@/types/api';
 type FavoritesContextType = {
   favorites: Dog[];
   toggleFavorite: (dog: Dog) => void;
+  resetFavorites: (() => [])
 };
 
 const FavoritesContext = createContext<FavoritesContextType>({
   favorites: [],
   toggleFavorite: () => {},
+  resetFavorites: () => []
 });
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
@@ -29,8 +31,12 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const resetFavorites = () => {
+      setFavorites([]);
+  };
+
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
+    <FavoritesContext.Provider value={{ favorites, toggleFavorite, resetFavorites }}>
       {children}
     </FavoritesContext.Provider>
   );
