@@ -22,8 +22,8 @@ interface Match {
   
 export interface SearchParams {
     breeds?: string[]
-    ageMin?: number
-    ageMax?: number
+    ageMin?: string
+    ageMax?: string
     sort?: string
     from?: number
 }
